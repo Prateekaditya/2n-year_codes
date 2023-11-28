@@ -1,86 +1,94 @@
+//Create a BST of n order and implement a menu of post,in and preorder on it;
 #include<stdio.h>
 #include<stdlib.h>
-struct Node 
-{
+struct node{
     int data;
-    struct Node *link;
+    struct node *left,*right;
 };
+struct node * newnode(int data){
+    struct node *temp=(struct node *)malloc(sizeof(struct node));
+    temp->data=data;
+    temp->left=temp->right=NULL;
+    return temp;
+}
 
-struct Node* createNode(int data){
-    struct Node* newNode=(struct Node*)malloc(sizeof (struct Node));
-    newNode ->data=data;
-    newNode ->link=NULL;
-    return newNode; 
-}
-//Function to insert Node at the beginning of the list.
-struct Node* insertAtBeginning(struct Node* head,int data)
-{
-    struct Node* newNode=createNode(data);
-    newNode -> link = head;
-    return newNode;
-}
-//function to delete Node from the beginning of the list.
-struct Node* deleteFromBeginning(struct Node*head)
-{
-    if(head == NULL)
-    {
-        printf("List is empty.");
-        return NULL;
+struct node *insert(struct node *root,int data){
+    if(root==NULL){
+        return newnode(data);
     }
-    struct Node* temp=head;
-    head=head->link;
-    free(temp);
-    return head;
-}
-
-//Function to traverse & print the linked list.
-void traverse(struct Node *head)
-{
-    printf("Linked List: ");
-    while (head != NULL)
-    {
-        printf("%d -> ", head->data);
-        head = head->link;
+    if(data<root->data){
+        root->left=insert(root->left,data);
     }
-    printf("NULL\n");
+    else if(data>root->data){
+        root->right=insert(root->right,data);
+    }
+    else{
+        printf("Duplicate data %d this data already exits in BST\n",data);
 }
-int main()
-{
-    struct Node* head=NULL;
-    int choice,data;
+    return root;
+}
 
+void preorder( struct node * root){
+    if(root!=NULL){
+        printf("%d\t",root->data);
+        preorder(root->left);
+        preorder(root->right);
+
+    }
+}
+void postorder(struct node *root){
+    if(root!=NULL){
+        postorder(root->left);
+        postorder(root->right);
+        printf("%d\t",root->data);
+    }
+}
+void inorder(struct node *root){
+    if(root!=NULL){
+        inorder(root->left);
+        printf("%d\t",root->data);
+        inorder(root->right);
+    }
+}
+
+int main(){
+    struct node *root=NULL;
+    int data,n,i,choice;
+    printf("Enter the number of nodes to be enter:");
+    scanf("%d",&n);
+    for(i=0;i<n;i++){
+        printf("Enter data:");
+        scanf("%d",&data);
+        root=insert(root,data);
+    }
+    printf("1.Preorder Traversal\n");
+    printf("2.Postorder Traversal\n");
+    printf("3.Inorder Traversal\n");
+    printf("4.Exit");
     while(1){
-    printf("\nMENU\n");
-    printf("1. Insert Node At Beginning.\n");
-    printf("2. Delete Node from Beginning.\n");
-    printf("3.Traverese Linked List.\n");
-    printf("4. Quit.\n");
-
-    printf("Enter the choice:");
-    scanf("%d",&choice);
-
-    switch (choice)
-    {
+        printf("\nEnter your choice:");
+        scanf("%d",&choice);
+       switch(choice){
         case 1:
-            printf("Enter data for the new node: ");
-            scanf("%d",&data);
-            head = insertAtBeginning(head,data);
+        printf("Preorder Traversal is:\n");
+        preorder(root);
         break;
-
         case 2:
-            head = deleteFromBeginning(head);
+        printf("Postorder Traversak is:\n");
+        postorder(root);
         break;
-
         case 3:
-            traverse(head);
+        printf("Inorder Traversal is:\n");
+        inorder(root);
         break;
-
         case 4:
-            exit(0);
-        
+        printf("EXIT---------\n");
+        exit(0);
         default:
-        printf("INVALID CHOICE..PLEASE TRY AGAIN");
+        printf("INVALID CHOICE\n");
+        break;
+        
+       }
     }
-    }
-return 0;
+    return 0;
 }
