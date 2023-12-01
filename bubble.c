@@ -1,10 +1,13 @@
-//OPTIMZED BUBBLE SORT
+// OPTIMIZED BUBBLE SORT
 #include <stdio.h>
+#include <stdlib.h>
+
 void swap(int *a, int *b) {
   int temp = *a;
   *a = *b;
   *b = temp;
 }
+
 void bubbleSort(int arr[], int n) {
   int isSwapped;
 
@@ -23,9 +26,20 @@ void bubbleSort(int arr[], int n) {
     }
   }
 }
+
 int main() {
-  int arr[] = {64, 34, 25, 12, 22, 11, 90};
-  int n = sizeof(arr) / sizeof(arr[0]);
+  int n;
+  int *arr; // Declare arr as a pointer to an integer
+
+  printf("Enter the size of the array:");
+  scanf("%d", &n);
+
+  arr = malloc(n * sizeof(int)); // Dynamically allocate memory for the array
+
+  for (int i = 0; i < n; i++) {
+    printf("Enter element %d:", i + 1);
+    scanf("%d", arr + i); // Use the pointer syntax to access array elements
+  }
 
   bubbleSort(arr, n);
 
@@ -33,6 +47,8 @@ int main() {
   for (int i = 0; i < n; i++) {
     printf("%d ", arr[i]);
   }
+
+  free(arr); // Deallocate the memory for the array
 
   return 0;
 }
