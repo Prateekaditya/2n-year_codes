@@ -6,7 +6,7 @@ void swap(int *a, int *b) {
   *b = temp;
 }
 
-void insertionSort(int arr[],int n){
+void selectioSort(int arr[],int n){
     for(int i=0;i<n;i++){
         int min=i;
         for(int j=i+1;j<n;j++){
@@ -39,7 +39,7 @@ int main(){
         scanf("%d",&arr[i]);
     }
 
-    insertionSort(arr,n);
+    selectioSort(arr,n);
 
     printf("The sorted Array is: ");
     printArray(arr,n);
