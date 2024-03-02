@@ -46,7 +46,5 @@ int main(){
     }
     printf("INORDER TRAVERSAL:");
     inorder(root);
-
-
     return 0;
 }
