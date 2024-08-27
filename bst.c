@@ -43,3 +43,40 @@ int main()
     return 0;
 
 }
+struct node *deleteNode(struct node *root, int data)
+{
+  if (root == NULL) {
+    return NULL;
+  }
+  if (data < root->data) {
+    root->left = deleteNode(root->left, data);
+  } else if (data > root->data) {
+    root->right = deleteNode(root->right, data);
+  } else {
+    // Node to be deleted found
+    // Check if the node has no children
+    if (root->left == NULL && root->right == NULL) {
+      free(root);
+      return NULL;
+    }
+    // Check if the node has one child
+if (root->left == NULL) {
+      struct node *temp = root->right;
+      free(root);
+      return temp;
+    } else
+ 
+if (root->right == NULL) {
+      struct node *temp = root->left;
+      free(root);
+      return temp;
+    }
+
+    // Check if the node has two children
+    struct node *successor = findMin(root->right);
+    root->data = successor->data;
+    root->right = deleteNode(root->right, successor->data);
+  }
+
+  return root;
+}
